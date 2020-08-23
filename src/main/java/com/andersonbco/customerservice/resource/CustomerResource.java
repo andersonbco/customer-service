@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,11 @@ public class CustomerResource {
   public CustomerResource(CustomerService service, ModelMapper modelMapper) {
     this.service = service;
     this.modelMapper = modelMapper;
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<CustomerDTO> findById(@PathVariable("id") String id) {
+    return ResponseEntity.ok().body(modelMapper.map(service.findById(id), CustomerDTO.class));
   }
 
   @GetMapping
