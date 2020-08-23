@@ -3,16 +3,20 @@ package com.andersonbco.customerservice.resource;
 import com.andersonbco.customerservice.dto.CustomerDTO;
 import com.andersonbco.customerservice.entity.Customer;
 import com.andersonbco.customerservice.service.CustomerService;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/customer")
@@ -33,12 +37,22 @@ public class CustomerResource {
 
   @GetMapping
   public ResponseEntity<List<CustomerDTO>> findAll() {
-    return ResponseEntity.ok().body(service.findAll().parallelStream().map(customer -> modelMapper.map(customer, CustomerDTO.class)).collect(
-        Collectors.toList()));
+    return ResponseEntity.ok()
+        .body(service.findAll().parallelStream().map(customer -> modelMapper.map(customer, CustomerDTO.class)).collect(
+            Collectors.toList()));
   }
 
   @PostMapping
   public ResponseEntity<CustomerDTO> save(@RequestBody Customer customer) {
-    return ResponseEntity.ok().body(modelMapper.map(service.save(customer), CustomerDTO.class));
+    Customer newCustomer = service.save(customer);
+    URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newCustomer.getId())
+        .toUri();
+    return ResponseEntity.created(location).body(modelMapper.map(newCustomer, CustomerDTO.class));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<CustomerDTO> delete(@PathVariable("id") String id) {
+    service.deleteById(id);
+    return ResponseEntity.noContent().build();
   }
 }
