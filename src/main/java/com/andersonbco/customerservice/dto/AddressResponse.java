@@ -3,7 +3,7 @@ package com.andersonbco.customerservice.dto;
 import lombok.Data;
 
 @Data
-public class AddressDTO {
+public class AddressResponse {
   private String number;
   private String streetAddress;
   private String city;

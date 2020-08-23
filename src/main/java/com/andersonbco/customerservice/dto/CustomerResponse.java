@@ -4,9 +4,9 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class CustomerDTO {
+public class CustomerResponse {
   private String id;
   private String name;
   private String cpf;
-  private List<AddressDTO> addresses;
+  private List<AddressResponse> addresses;
 }
