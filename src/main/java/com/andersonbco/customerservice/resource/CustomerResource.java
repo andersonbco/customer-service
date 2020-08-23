@@ -1,6 +1,6 @@
 package com.andersonbco.customerservice.resource;
 
-import com.andersonbco.customerservice.dto.CustomerResponse;
+import com.andersonbco.customerservice.dto.CustomerDTO;
 import com.andersonbco.customerservice.entity.Customer;
 import com.andersonbco.customerservice.service.CustomerService;
 import java.net.URI;
@@ -30,27 +30,27 @@ public class CustomerResource {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<CustomerResponse> findById(@PathVariable("id") String id) {
-    return ResponseEntity.ok().body(modelMapper.map(service.findById(id), CustomerResponse.class));
+  public ResponseEntity<CustomerDTO> findById(@PathVariable("id") String id) {
+    return ResponseEntity.ok().body(modelMapper.map(service.findById(id), CustomerDTO.class));
   }
 
   @GetMapping
-  public ResponseEntity<List<CustomerResponse>> findAll() {
+  public ResponseEntity<List<CustomerDTO>> findAll() {
     return ResponseEntity.ok()
-        .body(service.findAll().parallelStream().map(customer -> modelMapper.map(customer, CustomerResponse.class)).collect(
+        .body(service.findAll().parallelStream().map(customer -> modelMapper.map(customer, CustomerDTO.class)).collect(
             Collectors.toList()));
   }
 
   @PostMapping
-  public ResponseEntity<CustomerResponse> save(@RequestBody Customer customer) {
-    Customer newCustomer = service.save(customer);
+  public ResponseEntity<CustomerDTO> save(@RequestBody CustomerDTO customerDTO) {
+    Customer newCustomer = service.save(customerDTO);
     URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newCustomer.getId())
         .toUri();
-    return ResponseEntity.created(location).body(modelMapper.map(newCustomer, CustomerResponse.class));
+    return ResponseEntity.created(location).body(modelMapper.map(newCustomer, CustomerDTO.class));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<CustomerResponse> delete(@PathVariable("id") String id) {
+  public ResponseEntity<CustomerDTO> delete(@PathVariable("id") String id) {
     service.deleteById(id);
     return ResponseEntity.noContent().build();
   }
