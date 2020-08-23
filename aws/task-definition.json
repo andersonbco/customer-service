@@ -64,7 +64,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:sa-east-1:565715204981:task-definition/customer-service-task:1",
+  "taskDefinitionArn": "arn:aws:ecs:sa-east-1:565715204981:task-definition/customer-service-task:2",
   "family": "customer-service-task",
   "requiresAttributes": [
     {
@@ -122,7 +122,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 1,
+  "revision": 2,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
