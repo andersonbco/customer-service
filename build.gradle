@@ -42,6 +42,12 @@ checkstyle {
     showViolations = false
 }
 
+pmd {
+    toolVersion = "6.21.0"
+    ruleSets = []
+    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+}
+
 spotbugsMain {
     reports(({
         html {
