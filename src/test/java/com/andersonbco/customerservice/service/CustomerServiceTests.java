@@ -56,7 +56,7 @@ public class CustomerServiceTests {
   }
 
   @Test
-  public void whenValidId_thenReturnCustomer() {
+  public void whenCustomerExists_thenReturnCustomer() {
 
     Customer foundCustomer = customerService.findById(mockCustomer.getId());
 
@@ -67,7 +67,7 @@ public class CustomerServiceTests {
   }
 
   @Test
-  public void whenInvalidId_thenThrowsCustomerNotFoundException() {
+  public void whenCustomerDoesNotExists_thenThrowsCustomerNotFoundException() {
 
     Exception exception = assertThrows(CustomerNotFoundException.class, () -> customerService.findById("12345"));
 
