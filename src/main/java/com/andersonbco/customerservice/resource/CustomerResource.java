@@ -3,6 +3,7 @@ package com.andersonbco.customerservice.resource;
 import com.andersonbco.customerservice.dto.CustomerDTO;
 import com.andersonbco.customerservice.entity.Customer;
 import com.andersonbco.customerservice.service.CustomerService;
+import io.swagger.annotations.Api;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+@Api
 @RestController
 @RequestMapping("/customer")
 public class CustomerResource {
